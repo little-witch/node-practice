@@ -13,11 +13,11 @@ fs.writeFile("./test.txt","\r\n这是新插入的aa。\r\n这是另一个新加�
 		console.log("写入成功");
 	}
 });
-// fs.appendFile("./test.txt","\r\n新的。\r\n新的追加",function (err){//这里的flag 默认就是追加  a
-// 	if(err){
-// 		console.log("写入出错");
-// 		console.log(err);
-// 	}else{
-// 		console.log("写入成功");
-// 	}
-// });
+fs.appendFile("./test.txt","\r\n新的。\r\n新的追加falg为a的追加",function (err){//这里的flag 默认就是追加  a
+	if(err){
+		console.log("写入出错");
+		console.log(err);
+	}else{
+		console.log("写入成功");
+	}
+});
