@@ -3,7 +3,7 @@ var chat = net.createServer();
 var clientList = [];
 
 chat.on('error',function (err){
-	console.log("产生错误了"+err);
+	console.log(err);
 });
 
 
