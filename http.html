@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>node的表单提交</title>
+	<script type="text/javascript">
+	function getData(){
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET','http://localhost:8222',true);
+		xhr.onreadystatechange = function (){
+			if (xhr.readyState == 4){
+				if(xhr.status == 200){
+					document.getElementById("div").innerHTML = xhr.responseText;
+				}
+			}
+		}
+		xhr.send(null);
+	}
+</script>
+</head>
+<body>
+	<form action="http://localhost:8222" method="post">
+		<div>
+			<label for="name">姓名:</label>
+			<input type="text" name="name" id="name" value="关令娟" tabindex="1" />
+			<label for="age">年龄:</label>
+			<input type="text" name="age" id="age" value="24" tabindex="2" />
+		</div>
+	
+		<div>
+			<input type="submit" value="Submit" />
+		</div>
+	</form>
+	<button onclick='getData()'>获取数据</button>
+	<div id="div"></div>
+</body>
+
+</html>
