@@ -25,27 +25,39 @@ var io = require('socket.io')(server);
 /**
  * Listen on provided port, on all network interfaces.
  */
+//在线用户
+var onlineUsers = {};
+//当前在线人数
+var onlineCount = 0;
 
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-io.on('connection', function(socket){
-  console.log('connected');
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
-  });
-});
+
 io.emit('some event', { for: 'everyone' });
+
 io.on('connection', function(socket){
-  socket.broadcast.emit('hi');
-});
-io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  
+  socket.on('login', function(obj){
+    onlineCount++;
+    obj["onlineCount"] = onlineCount;
+    io.emit('login', obj);
   });
+  socket.on('chat message', function(obj){
+    io.emit('chat message', obj);
+  });
+  socket.on('disconnect', function(obj){
+    onlineCount--;
+    obj["onlineCount"] = onlineCount;
+    io.emit('close', '有人断开连接');
+  });
+
+  socket.on('logout', function(obj){
+    obj["onlineCount"] = onlineCount;
+    io.emit('logout', obj);
+  });
+  
+
 });
 /**
  * Normalize a port into a number, string, or false.

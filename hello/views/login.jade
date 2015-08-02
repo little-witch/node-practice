@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	h1= title
+	p Welcome to #{title}
+	p 请输入你的用户名
+	form(action="") 
+		input#mm()
+		button Send
+
+	script(src="http://code.jquery.com/jquery-1.11.1.js")
+	script.
+		$('form').submit(function(){
+			location.href = "/users?name="+$('#mm').val();
+			return false;
+		});
