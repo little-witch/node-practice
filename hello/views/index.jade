@@ -1,8 +1,7 @@
 extends layout
 
 block content
-	h1= title
-	p 当前在线人数 #{title}
+	h1 欢迎来到#{title}
 
 	ul#messages
 
@@ -28,7 +27,8 @@ block content
 		$('form').submit(function(){
 			var obj={
 				"name":name,
-				"value":$('#m').val()
+				"value":$('#m').val(),
+				"isSelf":true
 			}
 			socket.emit('chat message', obj);
 			$('#m').val('');return false;
@@ -43,7 +43,11 @@ block content
 		});
 		
 		socket.on('login',function(obj){
-			var html=[
+			var html = "";
+			if(typeof obj ==="string"){
+				html = obj;
+			}else{
+				html=[
 					'欢迎',
 					obj.name,
 					'登陆',
@@ -52,6 +56,7 @@ block content
 					obj.onlineCount,
 					'名游客'
 				].join(""); 
+			}
 			$('#messages').append($('<li>').text(html));
 		});
 		socket.on('logout',function(obj){

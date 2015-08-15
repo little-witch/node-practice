@@ -41,7 +41,8 @@ io.on('connection', function(socket){
   socket.on('login', function(obj){
     onlineCount++;
     obj["onlineCount"] = onlineCount;
-    io.emit('login', obj);
+    socket.broadcast.emit('login', obj);
+    socket.emit('login',"欢迎您"+obj.name);
   });
   socket.on('chat message', function(obj){
     io.emit('chat message', obj);
